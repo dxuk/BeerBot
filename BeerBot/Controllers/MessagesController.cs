@@ -27,7 +27,7 @@ namespace BeerBot
 
                 // return our reply to the user
                 //Activity reply = activity.CreateReply($"You sent {activity.Text} which was {length} characters");
-                Activity reply = activity.CreateReply($"Hi From BeerBot!");
+                Activity reply = activity.CreateReply($"Hello there human! I am your friendly BeerBot!");
 
                 await connector.Conversations.ReplyToActivityAsync(reply);
             }
