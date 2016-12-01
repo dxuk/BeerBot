@@ -63,7 +63,7 @@ namespace BeerBot
                     await connector.Conversations.ReplyToActivityAsync(activity.CreateReply($"Did not get location"));
 
                 }
-
+                await connector.Conversations.ReplyToActivityAsync(activity.CreateReply($"Location logic finished"));
 
                 await Conversation.SendAsync(activity, MakeRootDialog);
             }
