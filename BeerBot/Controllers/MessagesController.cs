@@ -47,9 +47,12 @@ namespace BeerBot
                     {
                         if (entity.Type == "Place")
                         {
-                            dynamic place = entity.Properties;
-                            entityValues = place.geo.latitude + " " + place.geo.longitude;
-
+                            try
+                            {
+                                dynamic place = entity.Properties;
+                                entityValues = place.geo.latitude + " " + place.geo.longitude;
+                            }
+                            catch { }
                         }
                         await connector.Conversations.ReplyToActivityAsync(activity.CreateReply($"Entity type is {entity.Type.ToString()}"));
 
