@@ -40,7 +40,7 @@ namespace BeerBot
                 //   await connector.Conversations.ReplyToActivityAsync(reply);
                 // Activity reply = activity.CreateReply($"Hi From BeerBot!");
 
-               if (activity.Entities != null )
+             if (activity.Entities != null )
                 {
 
                     await connector.Conversations.ReplyToActivityAsync(activity.CreateReply($"Entity is not null, there are {activity.Entities.Count}"));
@@ -72,7 +72,7 @@ namespace BeerBot
 
                 }
                 await connector.Conversations.ReplyToActivityAsync(activity.CreateReply($"Location logic finished"));
-
+                
                 await Conversation.SendAsync(activity, MakeRootDialog);
             }
             else
