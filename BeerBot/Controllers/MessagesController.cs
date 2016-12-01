@@ -43,7 +43,7 @@ namespace BeerBot
                if (activity.Entities != null )
                 {
 
-                    await connector.Conversations.ReplyToActivityAsync(activity.CreateReply($"Entity is not null"));
+                    await connector.Conversations.ReplyToActivityAsync(activity.CreateReply($"Entity is not null, there are {activity.Entities.Count}"));
                     string entityValues = "";
                     foreach (Entity entity in activity.Entities)
                     {
