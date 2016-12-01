@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -13,6 +14,11 @@ namespace BeerBot
     [BotAuthentication]
     public class MessagesController : ApiController
     {
+        public static string ClientId = "C9C3218FC4970A807B5FFD053149384EE40E36B4";
+        public static string ClientSecret = "F9A0F02556AA03BEA76725B8A5639E9EEE2D622E";
+        public static string AuthQueryString = $"client_id={ClientId}&client_secret={ClientSecret}";
+        public static string RootUrl = "https://api.untappd.com/v4/";
+
         /// <summary>
         /// POST: api/Messages
         /// Receive a message from a user and reply to it
@@ -28,10 +34,11 @@ namespace BeerBot
                 // return our reply to the user
                 //Activity reply = activity.CreateReply($"You sent {activity.Text} which was {length} characters");
 
-                var res = await GetData("https://api.untappd.com/v4/thepub/local?client_id=C9C3218FC4970A807B5FFD053149384EE40E36B4&client_secret=F9A0F02556AA03BEA76725B8A5639E9EEE2D622E&lat=52.205337&lng=0.121817");
-                var root = JsonConvert.DeserializeObject<Rootobject>(res);
+                var localsBeers = await GetLocalsBeerList(52.2, 0.12);
 
-                Activity reply = activity.CreateReply(root.response.checkins.items.First().beer.beer_name);
+                var beerList = string.Join(" ", localsBeers.Select(b => b.beer_name));
+
+                Activity reply = activity.CreateReply($"Your local has these beers - {beerList}");
 
                 await connector.Conversations.ReplyToActivityAsync(reply);
             }
@@ -41,6 +48,14 @@ namespace BeerBot
             }
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
+        }
+
+        public async Task<IEnumerable<Beer>> GetLocalsBeerList(double lat, double lon)
+        {
+            var res = await GetData($"{RootUrl}thepub/local?{AuthQueryString}&lat={lat}&lng={lon}");
+            var root = JsonConvert.DeserializeObject<Rootobject>(res);
+            var beers = root.response.checkins.items.Select(i => i.beer);
+            return beers;
         }
 
         public async Task<string> GetData(string request)
