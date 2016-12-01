@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 using Microsoft.Bot.Builder.FormFlow;
 using Microsoft.Bot.Builder.FormFlow.Advanced;
-using System.Threading.Tasks;
 
 namespace BeerBot
 {
@@ -26,8 +22,7 @@ namespace BeerBot
 
         public static IForm<BeerBotForm> BuildForm()
         {
-
-            BeerAgent beerAgent = new BeerAgent();
+            BeerAgent beerAgent = BeerAgent.Instance;
 
             return new FormBuilder<BeerBotForm>()
                     .Message("It looks like you are in <Location>, would you like a drink here or do you fancy a walk?")

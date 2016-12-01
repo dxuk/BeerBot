@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using BeerBot.Models;
 using Newtonsoft.Json;
 
@@ -11,6 +9,20 @@ namespace BeerBot
 {
     public class BeerAgent
     {
+        private static BeerAgent instance;
+
+        public static BeerAgent Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new BeerAgent();
+                }
+                return instance;
+            }
+        }
+
         public static string ClientId = "C9C3218FC4970A807B5FFD053149384EE40E36B4";
         public static string ClientSecret = "F9A0F02556AA03BEA76725B8A5639E9EEE2D622E";
         public static string AuthQueryString = $"client_id={ClientId}&client_secret={ClientSecret}";
