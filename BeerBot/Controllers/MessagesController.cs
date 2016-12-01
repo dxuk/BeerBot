@@ -9,6 +9,9 @@ using System.Web.Http.Description;
 using Microsoft.Bot.Connector;
 using Newtonsoft.Json;
 
+using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.FormFlow;
+
 namespace BeerBot
 {
     [BotAuthentication]
@@ -23,6 +26,13 @@ namespace BeerBot
         /// POST: api/Messages
         /// Receive a message from a user and reply to it
         /// </summary>
+        /// 
+
+        internal static IDialog<BeerBotForm> MakeRootDialog()
+        {
+            return Chain.From(() => FormDialog.FromForm(BeerBotForm.BuildForm));
+        }
+
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
             if (activity.Type == ActivityTypes.Message)
@@ -41,6 +51,10 @@ namespace BeerBot
                 Activity reply = activity.CreateReply($"Your local has these beers - {beerList}");
 
                 await connector.Conversations.ReplyToActivityAsync(reply);
+               // Activity reply = activity.CreateReply($"Hi From BeerBot!");
+                await Conversation.SendAsync(activity, MakeRootDialog);
+            
+               
             }
             else
             {
