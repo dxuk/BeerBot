@@ -48,7 +48,7 @@ namespace BeerBot
                     .SetType(null)
                     .SetDefine(async (state, field) =>
                     {
-                        foreach (var beer in await beerAgent.GetBeersByType(BeerStyle, 52.2, 0.12))
+                        foreach (var beer in await beerAgent.GetBeersByType(state.BeerStyle, 52.2, 0.12))
                             field
                                 .AddDescription(beer, beer)
                                 .AddTerms(beer, beer);
