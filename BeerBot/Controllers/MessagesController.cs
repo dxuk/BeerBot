@@ -42,11 +42,17 @@ namespace BeerBot
 
                if (activity.Entities != null )
                 {
+
+                    await connector.Conversations.ReplyToActivityAsync(activity.CreateReply($"Entity is not null"));
                     string entityValues = "";
                     foreach (Entity entity in activity.Entities)
                     {
+                        await connector.Conversations.ReplyToActivityAsync(activity.CreateReply($"Entity type is {entity.Type.ToString()}"));
+
                         if (entity.Type == "Place")
                         {
+                            await connector.Conversations.ReplyToActivityAsync(activity.CreateReply($"Entity is Place"));
+
                             try
                             {
                                 dynamic place = entity.Properties;
@@ -54,8 +60,7 @@ namespace BeerBot
                             }
                             catch { }
                         }
-                        await connector.Conversations.ReplyToActivityAsync(activity.CreateReply($"Entity type is {entity.Type.ToString()}"));
-
+                   
 
                     }
                
