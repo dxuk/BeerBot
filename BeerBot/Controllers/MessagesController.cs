@@ -42,17 +42,25 @@ namespace BeerBot
 
                if (activity.Entities != null )
                 {
+
+                    await connector.Conversations.ReplyToActivityAsync(activity.CreateReply($"Entity is not null, there are {activity.Entities.Count}"));
                     string entityValues = "";
                     foreach (Entity entity in activity.Entities)
                     {
-                        if (entity.Type == "Place")
-                        {
-                            dynamic place = entity.Properties;
-                            entityValues = place.geo.latitude + " " + place.geo.longitude;
-
-                        }
                         await connector.Conversations.ReplyToActivityAsync(activity.CreateReply($"Entity type is {entity.Type.ToString()}"));
 
+                        if (entity.Type == "Place")
+                        {
+                            await connector.Conversations.ReplyToActivityAsync(activity.CreateReply($"Entity is Place"));
+
+                            try
+                            {
+                                dynamic place = entity.Properties;
+                                entityValues = place.geo.latitude + " " + place.geo.longitude;
+                            }
+                            catch { }
+                        }
+                   
 
                     }
                
@@ -63,7 +71,7 @@ namespace BeerBot
                     await connector.Conversations.ReplyToActivityAsync(activity.CreateReply($"Did not get location"));
 
                 }
-
+                await connector.Conversations.ReplyToActivityAsync(activity.CreateReply($"Location logic finished"));
 
                 await Conversation.SendAsync(activity, MakeRootDialog);
             }
