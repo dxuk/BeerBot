@@ -44,17 +44,15 @@ namespace BeerBot
                 // return our reply to the user
                 //Activity reply = activity.CreateReply($"You sent {activity.Text} which was {length} characters");
 
-                var localsBeers = await GetLocalsBeerList(52.2, 0.12);
+                var styles = await GetLocalsBeerTypes(52.2, 0.12);
 
-                var beerList = string.Join(" ", localsBeers.Select(b => b.beer_name));
+                var beerTypesList = string.Join(" ", styles);
 
-                Activity reply = activity.CreateReply($"Your local has these beers - {beerList}");
+                Activity reply = activity.CreateReply($"Your local has these beer types - {beerTypesList}");
 
                 await connector.Conversations.ReplyToActivityAsync(reply);
                // Activity reply = activity.CreateReply($"Hi From BeerBot!");
                 await Conversation.SendAsync(activity, MakeRootDialog);
-            
-               
             }
             else
             {
@@ -64,6 +62,25 @@ namespace BeerBot
             return response;
         }
 
+        /// <summary>
+        /// Get a list of the types of beer served at the pub local to lat long
+        /// </summary>
+        /// <param name="lat"></param>
+        /// <param name="lon"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<string>> GetLocalsBeerTypes(double lat, double lon)
+        {
+            var localsBeers = await GetLocalsBeerList(lat, lon);
+            var styles = localsBeers.Select(b => b.beer_style).Distinct();
+            return styles;
+        }
+
+        /// <summary>
+        /// Get a list of beers served at the pub local to lat and long
+        /// </summary>
+        /// <param name="lat"></param>
+        /// <param name="lon"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<Beer>> GetLocalsBeerList(double lat, double lon)
         {
             var res = await GetData($"{RootUrl}thepub/local?{AuthQueryString}&lat={lat}&lng={lon}");
