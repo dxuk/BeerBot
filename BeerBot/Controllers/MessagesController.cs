@@ -26,7 +26,7 @@ namespace BeerBot
         {
             return Chain.From(() => FormDialog.FromForm(BeerBotForm.BuildForm));
         }
-
+        //hmm
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
             if (activity.Type == ActivityTypes.Message)
