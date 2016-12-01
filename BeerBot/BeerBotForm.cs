@@ -27,7 +27,6 @@ namespace BeerBot
 
         public static IForm<BeerBotForm> BuildForm()
         {
-
             BeerAgent beerAgent = new BeerAgent();
 
             return new FormBuilder<BeerBotForm>()
@@ -37,7 +36,7 @@ namespace BeerBot
                     .SetType(null)
                     .SetDefine(async (state, field) =>
                      {
-                         foreach (var prod in await MessagesController.GetLocalsBeerTypes(52.2, 0.12))
+                         foreach (var prod in await beerAgent.GetLocalsBeerTypes(52.2, 0.12))
                              field
                                  .AddDescription(prod, prod)
                                  .AddTerms(prod, prod);
@@ -49,7 +48,7 @@ namespace BeerBot
                     .SetType(null)
                     .SetDefine(async (state, field) =>
                     {
-                        foreach (var prod in await MessagesController.GetBeersByType())
+                        foreach (var prod in await beerAgent.GetBeersByType())
                             field
                                 .AddDescription(prod, prod)
                                 .AddTerms(prod, prod);
