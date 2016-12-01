@@ -12,8 +12,7 @@ namespace BeerBot
     public enum InitialOptions {Drink,Pub,Surprise}
 
     public enum LocationCheck {drinkHere,goForAWalk}
-    public enum BeerStyleOptions { theUsual, Lager, IPA, Wheat, Porter, SurpriseMe };
-
+   
     public enum BeerOptions { BlackSheep, Theakstons, Wheat};
 
 
@@ -37,10 +36,10 @@ namespace BeerBot
                     .SetType(null)
                     .SetDefine(async (state, field) =>
                      {
-                         foreach (var prod in await MessagesController.GetLocalsBeerTypes(52.2, 0.12))
-                             field
-                                 .AddDescription(prod, prod)
-                                 .AddTerms(prod, prod);
+                     foreach (var style in await beerAgent.GetLocalsBeerTypes(52.2, 0.12))
+                         field
+                             .AddDescription(style, style)
+                                 .AddTerms(style, style);
 
                          return true;
                      }))
@@ -49,13 +48,14 @@ namespace BeerBot
                     .SetType(null)
                     .SetDefine(async (state, field) =>
                     {
-                        foreach (var prod in await MessagesController.GetBeersByType())
+                        foreach (var beer in await beerAgent.GetBeersByType(BeerStyle))
                             field
-                                .AddDescription(prod, prod)
-                                .AddTerms(prod, prod);
+                                .AddDescription(beer, beer)
+                                .AddTerms(beer, beer);
 
                         return true;
                     }))
+                    .Message("It's on it's way!")
                      .Build();
 
 /* Hello User how can I help
