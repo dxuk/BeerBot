@@ -35,16 +35,40 @@ namespace BeerBot
                 // return our reply to the user
                 //Activity reply = activity.CreateReply($"You sent {activity.Text} which was {length} characters");
 
-              //  Activity reply = activity.CreateReply($"BeerBot");
+                //  Activity reply = activity.CreateReply($"BeerBot");
 
-             //   await connector.Conversations.ReplyToActivityAsync(reply);
-               // Activity reply = activity.CreateReply($"Hi From BeerBot!");
+                //   await connector.Conversations.ReplyToActivityAsync(reply);
+                // Activity reply = activity.CreateReply($"Hi From BeerBot!");
+
+               if (activity.Entities != null )
+                {
+                    string entityValues = "";
+                    foreach (Entity entity in activity.Entities)
+                        if (entity.Type == "Place")
+                        {
+                            dynamic place = entity.Properties;
+                            entityValues = place.geo.latitude + " " + place.geo.longitude;
+
+                        }
+                       
+               
+                    await connector.Conversations.ReplyToActivityAsync(activity.CreateReply($"Your location is {entityValues}"));
+                }
+                else
+                {
+                     
+                    await connector.Conversations.ReplyToActivityAsync(activity.CreateReply($"Did not get location"));
+
+                }
+
+
                 await Conversation.SendAsync(activity, MakeRootDialog);
             }
             else
             {
                 HandleSystemMessage(activity);
             }
+
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
         }
