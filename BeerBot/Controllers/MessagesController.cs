@@ -68,7 +68,7 @@ namespace BeerBot
         /// <param name="lat"></param>
         /// <param name="lon"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<string>> GetLocalsBeerTypes(double lat, double lon)
+        public static async Task<IEnumerable<string>> GetLocalsBeerTypes(double lat, double lon)
         {
             var localsBeers = await GetLocalsBeerList(lat, lon);
             var styles = localsBeers.Select(b => b.beer_style).Distinct();
@@ -81,7 +81,7 @@ namespace BeerBot
         /// <param name="lat"></param>
         /// <param name="lon"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<Beer>> GetLocalsBeerList(double lat, double lon)
+        public static async Task<IEnumerable<Beer>> GetLocalsBeerList(double lat, double lon)
         {
             var res = await GetData($"{RootUrl}thepub/local?{AuthQueryString}&lat={lat}&lng={lon}");
             var root = JsonConvert.DeserializeObject<Rootobject>(res);
@@ -89,7 +89,7 @@ namespace BeerBot
             return beers;
         }
 
-        public async Task<string> GetData(string request)
+        public static async Task<string> GetData(string request)
         {
             var http = new HttpClient();
             var res = await http.GetAsync(request);
