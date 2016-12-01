@@ -43,7 +43,7 @@ namespace BeerBot
             {
                 var res = await GetData($"{RootUrl}thepub/local?{AuthQueryString}&lat={lat}&lng={lon}");
                 var root = JsonConvert.DeserializeObject<Rootobject>(res);
-                BeerList = root.response.checkins.items.Select(i => i.beer);
+                BeerList = root.response.checkins.items.Select(i => i.beer).Take(5);
             }
             return BeerList;
         }
