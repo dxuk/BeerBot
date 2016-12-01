@@ -16,6 +16,8 @@ namespace BeerBot
         public static string AuthQueryString = $"client_id={ClientId}&client_secret={ClientSecret}";
         public static string RootUrl = "https://api.untappd.com/v4/";
 
+        private IEnumerable<Beer> BeerList { get; set; }
+
         /// <summary>
         /// Get a list of the types of beer served at the pub local to lat long
         /// </summary>
@@ -37,10 +39,13 @@ namespace BeerBot
         /// <returns></returns>
         public async Task<IEnumerable<Beer>> GetLocalsBeerList(double lat, double lon)
         {
-            var res = await GetData($"{RootUrl}thepub/local?{AuthQueryString}&lat={lat}&lng={lon}");
-            var root = JsonConvert.DeserializeObject<Rootobject>(res);
-            var beers = root.response.checkins.items.Select(i => i.beer);
-            return beers;
+            if (BeerList == null)
+            {
+                var res = await GetData($"{RootUrl}thepub/local?{AuthQueryString}&lat={lat}&lng={lon}");
+                var root = JsonConvert.DeserializeObject<Rootobject>(res);
+                BeerList = root.response.checkins.items.Select(i => i.beer);
+            }
+            return BeerList;
         }
 
         public async Task<string> GetData(string request)
@@ -48,6 +53,12 @@ namespace BeerBot
             var http = new HttpClient();
             var res = await http.GetAsync(request);
             return await res.Content.ReadAsStringAsync();
+        }
+
+        public async Task<IEnumerable<string>> GetBeersByType(string type, double lat, double lon)
+        {
+            var localsBeers = await GetLocalsBeerList(lat, lon);
+            return localsBeers.Where(b => b.beer_style == type).Select(b => b.beer_name);
         }
     }
 }
