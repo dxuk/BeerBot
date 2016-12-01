@@ -1,4 +1,6 @@
-﻿namespace BeerBot.Models
+﻿using System;
+
+namespace BeerBot.Models.Untapped.LocalModel
 {
     public class Rootobject
     {
@@ -125,7 +127,8 @@
         public float lat { get; set; }
         public float lng { get; set; }
     }
-
+    
+    [Serializable]
     public class Venue
     {
         public int venue_id { get; set; }

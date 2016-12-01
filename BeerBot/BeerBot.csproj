@@ -126,7 +126,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="LocationAgent.cs" />
+    <Compile Include="Models\BingMapsModel.cs" />
+    <Compile Include="Models\BingModel.cs" />
     <Compile Include="Models\Models.cs" />
+    <Compile Include="Models\UntappedVenueModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
