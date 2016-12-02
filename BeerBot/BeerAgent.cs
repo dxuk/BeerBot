@@ -67,7 +67,7 @@ namespace BeerBot
             
                 var res = await GetData($"{RootUrl}thepub/local?{AuthQueryString}&lat={lat}&lng={lon}");
                 var root = JsonConvert.DeserializeObject<Models.Untapped.LocalModel.Rootobject>(res);
-               
+           
            
             return root.response.checkins.items.OrderBy(i => i.distance).Select(i => i.venue).First();
         }

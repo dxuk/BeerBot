@@ -70,8 +70,7 @@ namespace BeerBot
 
                              if (state.UserVenueID != 0)
                              {
-
-
+                                
                                  foreach (var style in await beerAgent.GetLocalsBeerTypes(state.UserVenueID))
                                      field
                                          .AddDescription(style, style)

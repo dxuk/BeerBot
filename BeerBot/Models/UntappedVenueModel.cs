@@ -37,7 +37,7 @@ namespace BeerBot.Models.Untapped.VenueModel
     {
         public Venue venue { get; set; }
     }
-    [Serializable]
+
     public class Venue
     {
         public int venue_id { get; set; }
@@ -387,19 +387,24 @@ namespace BeerBot.Models.Untapped.VenueModel
     {
         public int total_count { get; set; }
         public int count { get; set; }
+        public object[] items { get; set; }
+    }
+
+    public class Toasts
+    {
+        public int total_count { get; set; }
+        public int count { get; set; }
+        public object auth_toast { get; set; }
         public Item5[] items { get; set; }
     }
 
     public class Item5
     {
+        public int uid { get; set; }
         public User2 user { get; set; }
-        public int checkin_id { get; set; }
-        public int comment_id { get; set; }
-        public bool comment_owner { get; set; }
-        public bool comment_editor { get; set; }
-        public string comment { get; set; }
+        public int like_id { get; set; }
+        public bool like_owner { get; set; }
         public string created_at { get; set; }
-        public string comment_source { get; set; }
     }
 
     public class User2
@@ -410,54 +415,20 @@ namespace BeerBot.Models.Untapped.VenueModel
         public string last_name { get; set; }
         public string bio { get; set; }
         public string location { get; set; }
-        public string relationship { get; set; }
-        public int is_supporter { get; set; }
         public string user_avatar { get; set; }
         public string account_type { get; set; }
         public object[] venue_details { get; set; }
-        public object[] brewery_details { get; set; }
-        public string user_link { get; set; }
-    }
-
-    public class Toasts
-    {
-        public int total_count { get; set; }
-        public int count { get; set; }
-        public object auth_toast { get; set; }
-        public Item6[] items { get; set; }
-    }
-
-    public class Item6
-    {
-        public int uid { get; set; }
-        public User3 user { get; set; }
-        public int like_id { get; set; }
-        public bool like_owner { get; set; }
-        public string created_at { get; set; }
-    }
-
-    public class User3
-    {
-        public int uid { get; set; }
-        public string user_name { get; set; }
-        public string first_name { get; set; }
-        public string last_name { get; set; }
-        public string bio { get; set; }
-        public string location { get; set; }
-        public string user_avatar { get; set; }
-        public string account_type { get; set; }
-        public object[] venue_details { get; set; }
-        public object[] brewery_details { get; set; }
+        public object brewery_details { get; set; }
         public string user_link { get; set; }
     }
 
     public class Media1
     {
         public int count { get; set; }
-        public Item7[] items { get; set; }
+        public Item6[] items { get; set; }
     }
 
-    public class Item7
+    public class Item6
     {
         public int photo_id { get; set; }
         public Photo1 photo { get; set; }
@@ -480,10 +451,10 @@ namespace BeerBot.Models.Untapped.VenueModel
     public class Badges
     {
         public int count { get; set; }
-        public Item8[] items { get; set; }
+        public Item7[] items { get; set; }
     }
 
-    public class Item8
+    public class Item7
     {
         public int badge_id { get; set; }
         public int user_badge_id { get; set; }
