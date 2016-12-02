@@ -2,6 +2,7 @@
 
 using Microsoft.Bot.Builder.FormFlow;
 using Microsoft.Bot.Builder.FormFlow.Advanced;
+using Microsoft.Bot.Connector;
 
 namespace BeerBot
 {
@@ -35,6 +36,7 @@ namespace BeerBot
             BeerAgent beerAgent = BeerAgent.Instance;
             LocationAgent locationAgent = LocationAgent.Instance;
 
+          
             return new FormBuilder<BeerBotForm>()
                    
 .Field(nameof(UserVenueCity))
@@ -57,7 +59,7 @@ namespace BeerBot
                     )
                     )
                  */
-                    .Message("What style of Beer do you fancy?")
+                    .Message("{UserVenueName} has the following styles of beer:")
                     .Field(new FieldReflector<BeerBotForm>(nameof(BeerStyle))
                     .SetType(null)
                     .SetDefine(async (state, field) =>
@@ -79,7 +81,7 @@ namespace BeerBot
                          }
                          return true;
                      }))
-                    .Message("Great, which one?")
+                    .Message("Great, please choose a beer.")
                     .Field(new FieldReflector<BeerBotForm>(nameof(BeerName))
                     .SetType(null)
                     .SetDefine(async (state, field) =>
