@@ -62,7 +62,7 @@ namespace BeerBot
                             float lat = (bingMapsResource.bbox[0] + (bingMapsResource.bbox[2] - bingMapsResource.bbox[0]) / 2);
                             float lng = (bingMapsResource.bbox[1] + (bingMapsResource.bbox[3] - bingMapsResource.bbox[1]) / 2);
 
-
+                            BeerAgent.Instance.ClearBeerCache();
                             var venue = await BeerAgent.Instance.GetLocals(lat, lng);
                             return venue;
 

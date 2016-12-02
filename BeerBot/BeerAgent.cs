@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -72,6 +73,10 @@ namespace BeerBot
             return root.response.checkins.items.OrderBy(i => i.distance).Select(i => i.venue).First();
         }
 
+        internal void ClearBeerCache()
+        {
+            BeerList = null;
+        }
 
         public async Task<string> GetData(string request)
         {
